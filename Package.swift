@@ -5,27 +5,29 @@ import PackageDescription
 let package = Package(
     name: "Charts",
     platforms: [
-          .iOS(.v12),
-          .tvOS(.v12),
-          .macOS(.v10_12),
+        .iOS(.v12),
+        .tvOS(.v12),
+        .macOS(.v10_12),
     ],
     products: [
         .library(
             name: "Charts",
-            targets: ["Charts"]),
+            targets: ["Charts"]
+        ),
         .library(
             name: "ChartsDynamic",
             type: .dynamic,
-            targets: ["Charts"])
+            targets: ["Charts"]
+        ),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-algorithms", from: "1.0.0")
+        .package(url: "https://github.com/apple/swift-algorithms", from: "1.0.0"),
     ],
     targets: [
         .target(
             name: "Charts",
             dependencies: [.product(name: "Algorithms", package: "swift-algorithms")]
-        )
+        ),
     ],
     swiftLanguageVersions: [.v5]
 )

@@ -69,6 +69,8 @@ extension CGSize
     }
 }
 
+import RealModule
+
 extension Double
 {
     /// Rounds the number to the nearest multiple of it's order of magnitude, rounding away from zero if halfway.
@@ -80,9 +82,9 @@ extension Double
             self != 0
             else { return self }
 
-        let d = ceil(log10(self < 0 ? -self : self))
+        let d = ceil(Double.log10(self < 0 ? -self : self))
         let pw = 1 - Int(d)
-        let magnitude = pow(10.0, Double(pw))
+        let magnitude = Double.pow(10.0, Double(pw))
         let shifted = (self * magnitude).rounded()
         return shifted / magnitude
     }
@@ -102,7 +104,7 @@ extension Double
             !i.isNaN
             else { return 0 }
 
-        return Int(ceil(-log10(i))) + 2
+        return Int(ceil(-Double.log10(i))) + 2
     }
 }
 
@@ -160,13 +162,13 @@ extension CGContext
     public func drawText(_ text: String, at point: CGPoint, align: TextAlignment, anchor: CGPoint = CGPoint(x: 0.5, y: 0.5), angleRadians: CGFloat = 0.0, attributes: [NSAttributedString.Key : Any]?)
     {
         let drawPoint = getDrawPoint(text: text, point: point, align: align, attributes: attributes)
-        
+
         if (angleRadians == 0.0)
         {
             NSUIGraphicsPushContext(self)
-            
+
             (text as NSString).draw(at: drawPoint, withAttributes: attributes)
-            
+
             NSUIGraphicsPopContext()
         }
         else
@@ -174,7 +176,7 @@ extension CGContext
             drawText(text, at: drawPoint, anchor: anchor, angleRadians: angleRadians, attributes: attributes)
         }
     }
-    
+
     public func drawText(_ text: String, at point: CGPoint, anchor: CGPoint = CGPoint(x: 0.5, y: 0.5), angleRadians: CGFloat, attributes: [NSAttributedString.Key : Any]?)
     {
         var drawOffset = CGPoint()
@@ -230,7 +232,7 @@ extension CGContext
     private func getDrawPoint(text: String, point: CGPoint, align: TextAlignment, attributes: [NSAttributedString.Key : Any]?) -> CGPoint
     {
         var point = point
-        
+
         if align == .center
         {
             point.x -= text.size(withAttributes: attributes).width / 2.0
@@ -241,7 +243,7 @@ extension CGContext
         }
         return point
     }
-    
+
     func drawMultilineText(_ text: String, at point: CGPoint, constrainedTo size: CGSize, anchor: CGPoint, knownTextSize: CGSize, angleRadians: CGFloat, attributes: [NSAttributedString.Key : Any]?)
     {
         var rect = CGRect(origin: .zero, size: knownTextSize)
